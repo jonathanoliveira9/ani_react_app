@@ -33,7 +33,7 @@ const App = () => {
      <p>Idade: {dados.year}</p>
      <p>Situação: <span style={{ color: dados.active ? 'green' : 'red' }}>{dados.active? 'Ativa' : 'Inativa'}</span></p>
      <p>Total gasto: {expend}</p>
-     <p style={{display: expend > 10000 ? 'true' :'none'}}>Você está gastando muito.</p>
+     <p>{expend > 10000 && 'Você está gastando muito.'}</p>
    </div>
 
  );
