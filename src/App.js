@@ -1,14 +1,15 @@
 import React from 'react';
+import Footer from './components/Footer';
+import Form from './components/Form/Form';
+import Header from './components/Header';
 
 const App = () => {
-  function handleScroll(event){
-    console.log(event);
-  }
-
-  window.addEventListener('scroll', handleScroll);
+  
   return (
-    <div style={{height: '200vh'}}>
-      <button onClick={(event) => console.log(event.target)}>Clique</button>
+    <div>
+      <Header/>
+      <Form />
+      <Footer/>
     </div>
   );
 }
