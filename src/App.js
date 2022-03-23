@@ -1,21 +1,24 @@
 import React from 'react';
-import Header from './components/Header';
-import Home from './components/Home';
-import Products from './components/Products';
+import ButtonModal from './components/ButtonModal';
+import Modal from './components/Modal';
 
 const App = () => {
-  const { pathname } = window.location;
-  let Page = Home;
-  if (pathname === '/products') {
-    Page = Products;
-  } else {
-    Page = Home;
+  const [modal, setModal] = React.useState(false);
+  const [active, setActive] = React.useState(true)
+  const [data, setData] = React.useState({ nickname: 'Andre', year: '20' });
+  function handleClick() {
+    setActive(!active)
+    setData({...data, university: 'Has university'})
   }
-
   return (
     <div>
-      <Header />
-      <Page />
+      <ButtonModal setModal={setModal}></ButtonModal>
+      <div>{modal ? 'Modal Aberto' : 'Modal fechado' }</div>
+      <Modal modal={modal} setModal={setModal}/>
+      <p>{data.nickname}</p>
+      <p>{data.year}</p>
+      <p>{data.university}</p>
+      <button onClick={handleClick}>{active ? 'Activo' : 'Inactive'}</button>
     </div>
   );
 }
