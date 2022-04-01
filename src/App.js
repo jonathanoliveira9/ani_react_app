@@ -1,24 +1,29 @@
 import React from 'react';
-import ButtonModal from './components/ButtonModal';
-import Modal from './components/Modal';
+import Product from './components/Product';
 
 const App = () => {
-  const [modal, setModal] = React.useState(false);
-  const [active, setActive] = React.useState(true)
-  const [data, setData] = React.useState({ nickname: 'Andre', year: '20' });
-  function handleClick() {
-    setActive(!active)
-    setData({...data, university: 'Has university'})
+  const [datas, setData] = React.useState(null);
+  const [load, setLoad] = React.useState(null);
+  async function handleClick(event) {
+    setLoad(true)
+    const response = await fetch(`https://ranekapi.origamid.dev/json/api/produto/${event.target.innerText}`)
+    const json = await response.json()
+    setLoad(false)
+    setData(json)
   }
   return (
     <div>
-      <ButtonModal setModal={setModal}></ButtonModal>
-      <div>{modal ? 'Modal Aberto' : 'Modal fechado' }</div>
-      <Modal modal={modal} setModal={setModal}/>
-      <p>{data.nickname}</p>
-      <p>{data.year}</p>
-      <p>{data.university}</p>
-      <button onClick={handleClick}>{active ? 'Activo' : 'Inactive'}</button>
+      <button style={{ margin: '.5rem'}} onClick={handleClick}>
+        notebook
+      </button>
+      <button style={{ margin: '.5rem'}} onClick={handleClick}>
+        smartphone
+      </button>
+      <button style={{ margin: '.5rem'}} onClick={handleClick}>
+        tablet
+      </button>
+      {load && <p>Carregando...</p>}
+      {!load && datas && <Product datas={datas}/> }
     </div>
   );
 }
