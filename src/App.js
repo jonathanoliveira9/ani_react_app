@@ -1,29 +1,25 @@
 import React from 'react';
-import Product from './components/Product';
+import Product from './Product';
 
 const App = () => {
-  const [datas, setData] = React.useState(null);
-  const [load, setLoad] = React.useState(null);
-  async function handleClick(event) {
-    setLoad(true)
-    const response = await fetch(`https://ranekapi.origamid.dev/json/api/produto/${event.target.innerText}`)
+  const [data, setData] = React.useState(null)
+  const [loading, setLoading] = React.useState(null)
+  async function loadData (type) {
+    setLoading(true)
+    const response = await fetch(`https://ranekapi.origamid.dev/json/api/produto/${type}`)
+    setData(response)
     const json = await response.json()
-    setLoad(false)
     setData(json)
+    setLoading(false)
   }
   return (
     <div>
-      <button style={{ margin: '.5rem'}} onClick={handleClick}>
-        notebook
-      </button>
-      <button style={{ margin: '.5rem'}} onClick={handleClick}>
-        smartphone
-      </button>
-      <button style={{ margin: '.5rem'}} onClick={handleClick}>
-        tablet
-      </button>
-      {load && <p>Carregando...</p>}
-      {!load && datas && <Product datas={datas}/> }
+      <button style={{ margin: '2px'}} onClick={() => loadData('tablet')}>tablet</button>
+      <button style={{ margin: '2px'}} onClick={() => loadData('smartphone')}>smartphone</button>
+      <button style={{ margin: '2px'}} onClick={() => loadData('notebook')}>notebook</button>
+      {loading && <p>Carregando</p>}
+      {data && <Product data={data}/>}
+     
     </div>
   );
 }
